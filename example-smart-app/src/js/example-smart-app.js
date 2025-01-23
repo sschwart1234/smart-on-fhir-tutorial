@@ -27,7 +27,7 @@
         $.when(pt, obv).done(function(patient, obv) {
           var byCodes = smart.byCodes(obv, 'code');
           var gender = patient.gender;
-          var maritalStatus = patient.maritalStatus;
+          var married = patient.maritalStatus;
 
           var fname = '';
           var lname = '';
@@ -48,7 +48,7 @@
           p.gender = gender;
           p.fname = fname;
           p.lname = lname;
-          p.maritalStatus = maritalStatus;
+          p.married = maritalStatus;
           p.height = getQuantityValueAndUnit(height[0]);
 
           if (typeof systolicbp != 'undefined')  {
