@@ -22,9 +22,9 @@
                     }
                   });
 
-        $.when(pt, obv).fail(onError);
+        $.when(pt, obv).catch(onError);
 
-        $.when(pt, obv).done(function(patient, obv) {
+        $.when(pt, obv).then(function(patient, obv) {
           var byCodes = smart.byCodes(obv, 'code');
           var gender = patient.gender;
 
@@ -67,7 +67,7 @@
       }
     }
 
-    FHIR.oauth2.ready(onReady, onError);
+    FHIR.oauth2.ready().then((onReady).catch(onError);
     return ret.promise();
 
   };
