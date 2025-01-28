@@ -4,28 +4,18 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
     <title>Example-SMARTer-App</title>
-
-    <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
   </head>
   <body>
-    <div id='errors'>
-    </div>
-    <div id="loading" class="spinner">
-      <div class="bounce1"></div>
-      <div class="bounce2"></div>
-      <div class="bounce3"></div>
-    </div>
     <div id='holder' >
-      <h2>Example-SMART-App</h2>
-
+      <h2>Simple SMART-App</h2>
       <h2>Patient Resource</h2>
       <table>
         <tr>
-          <th>First Name:</th>
+          <th>First name:</th>
           <td id='fname'></td>
         </tr>
         <tr>
-          <th>Last Name:</th>
+          <th>Last name:</th>
           <td id='lname'></td>
         </tr>
         <tr>
@@ -36,59 +26,43 @@
           <th>Date of Birth:</th>
           <td id='birthdate'></td>
         </tr>
-        <tr>
-          <th>Marital Status:</th>
-          <td id='maritalStatus'></td>
-        </tr>
-      </table>
-      <h2>Observation Resource</h2>
-      <table>
-        <tr>
-          <th>Height:</th>
-          <td id='height'></td>
-        </tr>
-        <tr>
-          <th>Systolic Blood Pressure:</th>
-          <td id='systolicbp'></td>
-
-        </tr>
-        <tr>
-          <th>Diastolic Blood Pressure:</th>
-          <td id='diastolicbp'></td>
-        </tr>
-        <tr>
-          <th>LDL:</th>
-          <td id='ldl'></td>
-        </tr>
-        <tr>
-          <th>HDL:</th>
-          <td id='hdl'></td>
-        </tr>
-      </table>
+      </table> 
     </div>
-    <!-- Application-level javascript-->
-    <script src='./src/js/example-smart-app.js'></script>
-
     <!-- FHIR Client JS Library -->
-    <script src='./lib/js/fhir-client.js'></script>
-
-    <!-- Prevent session bleed caused by single threaded embedded browser and sessionStorage API -->
-    <!-- https://github.com/cerner/fhir-client-cerner-additions -->
-    <!--<script src='./lib/js/fhir-client-cerner-additions-1.0.0.js'></script> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
     <script>
-      extractData().then(
-        //Display Patient Demographics and Observations if extractData was success
-        function(p) {
-          drawVisualization(p);
-        },
+      const client = new FHIR.client({
+          serverUrl: "https://r3.smarthealthit.org",
+          tokenResponse: {
+              patient: "2e27c71e-30c8-4ceb-8c1c-5641e066c0a4"
+          }
+      });
 
-        //Display 'Failed to call FHIR Service' if extractData failed
-        function() {
-          $('#loading').hide();
-          $('#errors').html('<p> Failed to call FHIR Service </p>');
-        }
-      );
+      const patient = client.request(`Patient/${client.patient.id}`).then(handlePatient);
+
+    function handlePatient(patient) {
+      var gender = patient.gender;
+      fname = patient.name[0].given;
+      lname = patient.name[0].family;
+      var p = defaultPatient();
+      p.birthdate = patient.birthDate;
+      p.gender = gender;
+      p.fname = fname;
+      p.lname = lname;
+      document.getElementById('fname').innerHTML=p.fname;
+      document.getElementById('lname').innerHTML=p.lname;
+      document.getElementById('gender').innerHTML=p.gender;
+      document.getElementById('birthdate').innerHTML=p.birthdate;
+  }
+
+  function defaultPatient(){
+    return {
+      fname: {value: ''},
+      lname: {value: ''},
+      gender: {value: ''},
+      birthdate: {value: ''},
+    };
+  }
     </script>
   </body>
 </html>
