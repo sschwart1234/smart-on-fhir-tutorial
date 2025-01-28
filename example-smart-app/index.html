@@ -31,15 +31,9 @@
     <!-- FHIR Client JS Library -->
     <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
     <script>
-      const client = new FHIR.client({
-          serverUrl: "https://r3.smarthealthit.org",
-          tokenResponse: {
-              patient: "2e27c71e-30c8-4ceb-8c1c-5641e066c0a4"
-          }
-      });
-
-      const patient = client.request(`Patient/${client.patient.id}`).then(handlePatient);
-
+      FHIR.oauth.read().then(function(client) {
+        client.patient.read().then(handlePatient)
+    });
     function handlePatient(patient) {
       var gender = patient.gender;
       fname = patient.name[0].given;
