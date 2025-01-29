@@ -128,7 +128,7 @@
                   function(error) {
                     document.getElementById("communication").innerText = error.stack;
                   }
-                };
+                );
             }).catch(console.error);
             function buildHtmlTable(encounter) {
               var section = "<table><tr><th>Date</th><th>Status</th><th>Summary</th><th>ID</th></tr>";
