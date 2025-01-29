@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>Example SMART App</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
         <style>
             #patient, #encounter {
@@ -81,10 +82,10 @@
                 })
                 
 
-                // Render the current patient's medications (or any error)
+                // Render the current patient's encounters (or any error)
                 .then(
                     function(encounter) {
-                        document.getElementById("encounter").innerText = JSON.stringify(encounter, null, 4);
+                        document.getElementById("encounter").innerText = buildHtmlTable(encounter);
                     },
                     function(error) {
                         document.getElementById("encounter").innerText = error.stack;
@@ -92,6 +93,17 @@
                 );
 
             }).catch(console.error);
+            function buildHtmlTable(encounter) {
+              var section = "";
+              for (var i = 0; i < encounter.length; i++) {
+                var row = "<div>";
+                row.append(JSON.stringify(encounter[i], null, 4));
+                row.append("</div>");
+                section.append(row);
+              }
+              return section;
+            }
+
         </script>
     </body>
 </html>
