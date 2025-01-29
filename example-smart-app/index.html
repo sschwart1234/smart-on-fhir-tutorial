@@ -40,6 +40,7 @@
             <td id='language'></td>
           </tr>
         </table>
+        <div id=debug>Loading...</div>
         <br/>
         </div>
         <h4>Medications</h4>
@@ -60,6 +61,7 @@
                         document.getElementById("gender").innerText = gender;
                         document.getElementById("birthdate").innerText = birthdate;
                         document.getElementById("language").innerText = language;
+                        document.getElementById("debug").innerText = JSON.stringify(pt, null, 4);
                     },
                     function(error) {
                         document.getElementById("patient").innerText = error.stack;
