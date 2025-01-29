@@ -85,7 +85,7 @@
                 // Render the current patient's encounters (or any error)
                 .then(
                     function(encounter) {
-                        document.getElementById("encounter").htmlt = buildHtmlTable(encounter);
+                        document.getElementById("encounter").innerHTML = buildHtmlTable(encounter);
                     },
                     function(error) {
                         document.getElementById("encounter").innerText = error.stack;
