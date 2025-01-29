@@ -18,6 +18,24 @@
     <body>
         <h4>Current Patient</h4>
         <div id="patient">Loading...</div>
+        <table>
+          <tr>
+            <th>First Name:</th>
+            <td id='fname'></td>
+          </tr>
+          <tr>
+            <th>Last Name:</th>
+            <td id='lname'></td>
+          </tr>
+          <tr>
+            <th>Gender:</th>
+            <td id='gender'></td>
+          </tr>
+          <tr>
+            <th>Date of Birth:</th>
+            <td id='birthdate'></td>
+          </tr>
+        </table>
         <br/>
         <h4>Medications</h4>
         <div id="meds">Loading...</div>
@@ -27,7 +45,14 @@
                 // Render the current patient (or any error)
                 client.patient.read().then(
                     function(pt) {
-                        document.getElementById("patient").innerText = JSON.stringify(pt, null, 4);
+                        fname = pt.name[0].given;
+                        lname = pt.name[0].family;
+                        gender = pt.gender;
+                        birthdate = pt.birthDate;
+                        document.getElementById("fname").innerText = fname;
+                        document.getElementById("lname").innerText = lname;
+                        document.getElementById("gender").innerText = gender;
+                        document.getElementById("birthdate").innerText = birthdate;
                     },
                     function(error) {
                         document.getElementById("patient").innerText = error.stack;
