@@ -6,7 +6,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
         <style>
-            #patient, #encounter {
+            #patient, #encounter, #communication {
                 font-family: Monaco, monospace;
                 white-space: pre;
                 font-size: 13px;
@@ -58,6 +58,8 @@
         </div>
         <h4>Encounter</h4>
         <div id="encounter">Loading...</div>
+        <h4>Communications</h4>
+        <div id="communication">Loading...</div>
         <script type="text/javascript">
             FHIR.oauth2.ready().then(function(client) {
                 
@@ -104,7 +106,29 @@
                         document.getElementById("encounter").innerText = error.stack;
                     }
                 );
+                // Get All Communications to start
+                client.request("/Communication", {
+                  resolveReferences: [ "Communication" ],
+                  graph: true
+                })
 
+                // Reject if no Communications are found
+                .then(function(data) {
+                  if (!data.entry || !data.entry.length) {
+                    throw new Error("No communications found");
+                  }
+                  return data.entry;
+                })
+
+                // Render all Communications
+                .then(
+                  function(communication) {
+                    document.getElementById("communication").innerText = JSON.stringify(communication, null, 4);
+                  },
+                  function(error) {
+                    document.getElementById("communication).innerText = error.stack;
+                  }
+                };
             }).catch(console.error);
             function buildHtmlTable(encounter) {
               var section = "<table><tr><th>Date</th><th>Status</th><th>Summary</th><th>ID</th></tr>";
