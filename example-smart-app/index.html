@@ -107,7 +107,7 @@
                     }
                 );
                 // Get All Communications to start
-                client.request("/Communication", {
+                client.request("/Communication?patient=" + client.patient.id, {
                   resolveReferences: [ "Communication" ],
                   graph: true
                 })
