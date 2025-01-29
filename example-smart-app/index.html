@@ -96,7 +96,7 @@
             function buildHtmlTable(encounter) {
               var section = "";
               for (var i = 0; i < encounter.length; i++) {
-                var row = "<div>" + JSON.stringify(encounter[i], null, 4); + "</div>"
+                var row = "<div>" + JSON.stringify(encounter[i], null, 4) + "</div>";
                 section = section + row;
               }
               return section;
