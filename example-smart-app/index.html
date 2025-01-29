@@ -123,13 +123,26 @@
                 // Render all Communications
                 .then(
                   function(communication) {
-                    document.getElementById("communication").innerText = JSON.stringify(communication, null, 4);
+                    document.getElementById("communication").innerHTML = buildCommunicationTable(communication);
                   },
                   function(error) {
                     document.getElementById("communication").innerText = error.stack;
                   }
                 );
             }).catch(console.error);
+            function buildCommunicationTable(communication) {
+              var section = "<table><tr><th>Date</th><th>Reference</th><th>Note</th><th>ID</th></tr>";
+              for (var i = 0 ; i < communication.length; i++) {
+                var date = communication[i].resource.sent;
+                var reference = communication[i].resouce.partOf[0].reference;
+                var note = communication[i].resource.note[0].text;
+                var id = communication[i].resource.id;
+                var row = "<tr><td>" + date + "</td><td>" + references + "</td><td>" + note + "</td><td>" + id + "</td></tr>";
+                section = section + row;
+              }
+              var table = section + "</table>";
+              return table;
+            }
             function buildHtmlTable(encounter) {
               var section = "<table><tr><th>Date</th><th>Status</th><th>Summary</th><th>ID</th></tr>";
               for (var i = 0; i < encounter.length; i++) {
