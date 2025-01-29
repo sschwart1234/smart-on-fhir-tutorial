@@ -17,7 +17,7 @@
     </head>
     <body>
         <h4>Current Patient</h4>
-        <div id="patient">Loading...</div>
+        <div id="patient">
         <table>
           <tr>
             <th>First Name:</th>
@@ -35,8 +35,13 @@
             <th>Date of Birth:</th>
             <td id='birthdate'></td>
           </tr>
+          <tr>
+            <th>Preferred Language:</th>
+            <td id='language'></td>
+          </tr>
         </table>
         <br/>
+        </div>
         <h4>Medications</h4>
         <div id="meds">Loading...</div>
         <script type="text/javascript">
@@ -49,10 +54,12 @@
                         lname = pt.name[0].family;
                         gender = pt.gender;
                         birthdate = pt.birthDate;
+                        language = pt.communication[0].language;
                         document.getElementById("fname").innerText = fname;
                         document.getElementById("lname").innerText = lname;
                         document.getElementById("gender").innerText = gender;
                         document.getElementById("birthdate").innerText = birthdate;
+                        document.getElementById("language").innerText = language;
                     },
                     function(error) {
                         document.getElementById("patient").innerText = error.stack;
