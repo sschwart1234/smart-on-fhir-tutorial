@@ -96,11 +96,11 @@
             function buildHtmlTable(encounter) {
               var section = "<table><tr><th>Date</th><th>Status</th><th>Summary</th><th>Reason</th><th>ID</th></tr>";
               for (var i = 0; i < encounter.length; i++) {
-                var date = encounter[i].period.start;
-                var status = encounter[i].status;
-                var summary = encounter[i].type[0].text;
-                var reason = encounter[i].reasonCode[0].coding[0].display;
-                var id = encounter[i].id;
+                var date = encounter[i].resource.period.start;
+                var status = encounter[i].resource.status;
+                var summary = encounter[i].resource.type[0].text;
+                var reason = encounter[i].resource.reasonCode[0].coding[0].display;
+                var id = encounter[i].resource.id;
                 var row  = "<tr><td>" + date + "</td><td>" + status + "</td><td>" + summary + "</td><td>" + reason + "</td><td>" + id + "</td></tr>";
 
                 section = section + row;
